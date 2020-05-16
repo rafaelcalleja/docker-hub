@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: test-1/Dockerfile
+      args:
+        PWD: ${PWD:?PWD Required}
     command: "/run_test.sh"
     working_dir: ${PWD}
     environment:
