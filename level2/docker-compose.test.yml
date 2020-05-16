@@ -11,6 +11,9 @@ services:
       args:
         PWD: ${PWD:?PWD Required}
     command: "/run_test.sh"
+    environment:
+      - BUILD_CODE
+    working_dir: /src/${BUILD_CODE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /src/${BUILD_CODE}:/src/${BUILD_CODE}
