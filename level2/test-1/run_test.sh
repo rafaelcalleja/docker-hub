@@ -2,13 +2,8 @@
 
 set -x
 
-echo ${PWD}
-echo ${WORKDIR}
+ls -la
 
-echo "start"
-
-env
-
-echo "end"
+echo $PWD
 
 exit 0
