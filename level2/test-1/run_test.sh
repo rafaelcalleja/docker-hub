@@ -3,7 +3,7 @@
 set -x
 
 docker ps
-docker login
+
 env
 
 ls -la
