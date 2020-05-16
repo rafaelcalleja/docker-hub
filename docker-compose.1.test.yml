@@ -1,0 +1,18 @@
+version: '3.6'
+
+services:
+  sut:
+    privileged: true
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: test-1/Dockerfile
+    command: "/run_test.sh"
+    working_dir: ${PWD}
+    environment:
+      - WORKDIR=${PWD}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:${PWD}
+      - $HOME/.docker/config.json:/root/.docker/config.json
