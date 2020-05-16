@@ -1,0 +1,8 @@
+version: '3.6'
+
+services:
+  sut:
+    build:
+      context: .
+      dockerfile: test-1/Dockerfile
+    command: "/run_test.sh"
