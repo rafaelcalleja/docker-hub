@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -x
+
+docker ps
 env
 
 ls -la

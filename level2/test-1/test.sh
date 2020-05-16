@@ -3,5 +3,5 @@ set -a
 
 FOLDER=${PWD##*/}
 
-docker-compose -p ${FOLDER}_test -f docker-compose.1.test.yml down -v --rmi local
-docker-compose -p ${FOLDER}_test -f docker-compose.1.test.yml up --build -V --exit-code-from sut
+docker-compose -p ${FOLDER}_test -f docker-compose.test.yml down -v --rmi local
+docker-compose -p ${FOLDER}_test -f docker-compose.test.yml up --build -V --exit-code-from sut
