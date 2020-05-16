@@ -13,5 +13,5 @@ services:
     command: "/run_test.sh"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - .:${PWD}
+      - /src/${BUILD_CODE}:/src/${BUILD_CODE}
       - $HOME/.docker/config.json:/root/.docker/config.json

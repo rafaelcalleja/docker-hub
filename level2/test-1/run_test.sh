@@ -3,17 +3,17 @@
 set -x
 
 docker ps
+docker login
 env
 
 ls -la
 
 echo $PWD
 
-cat /root/.docker/config.json
-
 pwd
 
 ls -la ../
 ls -la ../../
+ls -la ../../../
 
 exit 0
