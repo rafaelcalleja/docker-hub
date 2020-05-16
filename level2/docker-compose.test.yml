@@ -2,6 +2,9 @@ version: '3.6'
 
 services:
   sut:
+    privileged: true
+    tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: test-1/Dockerfile
