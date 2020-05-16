@@ -1,7 +1,9 @@
 #!/bin/bash
 
-set -x
+echo "start"
 
 env
+
+echo "end"
 
 exit 0
