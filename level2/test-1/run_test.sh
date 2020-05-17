@@ -13,7 +13,7 @@ echo $PWD
 
 pwd
 
-FOLDER=${PWD##*/}
+FOLDER=level2
 docker-compose --env-file ${ENV_FILE:-.env} -f level2/docker-compose.yml up -d
 
 echo "WAITING FOR SELENIUM"
