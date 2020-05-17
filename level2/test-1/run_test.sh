@@ -23,6 +23,6 @@ docker run -it --rm --net="${FOLDER}_default" dokify/wait-for -s chrome:5555 -t 
 echo "WAITING FOR FIREFOX"
 docker run -it --rm --net="${FOLDER}_default" dokify/wait-for -s firefox:5555 -t 0 -- echo FIREFOX READY
 
-docker-compose --env-file ${ENV_FILE:-.env} -f level2/docker-compose.yml -f level2/nosetest/docker-compose.yml run --rm --no-deps check-nosetest
+DOCKER_API_VERSION=1.37 docker-compose --env-file ${ENV_FILE:-.env} -f level2/docker-compose.yml -f level2/nosetest/docker-compose.yml run --rm --no-deps check-nosetest
 
 exit 0
