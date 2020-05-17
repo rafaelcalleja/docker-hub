@@ -4,6 +4,8 @@ set -x
 
 docker ps
 docker network ls
+docker info
+docker version
 
 env
 
