@@ -3,6 +3,7 @@
 set -x
 
 docker ps
+docker network ls
 
 env
 
