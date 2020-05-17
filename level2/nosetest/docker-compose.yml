@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  check-nosetest:
+    image: dokify/nosetest:python-2.7
+    tty: true
+    stdin_open: true
+    environment:
+      - SELENIUM_ENDPOINT=http://selenium-hub:${SELENIUM_PORT:-4444}/wd/hub
+    depends_on:
+      - chrome
+      - firefox
+    volumes:
+      - ./nosetest/test_selenium.py:/test_selenium.py
+      - ./nosetest/docker-cmd.sh:/cmd.sh
+    command: /cmd.sh /test_selenium.py
