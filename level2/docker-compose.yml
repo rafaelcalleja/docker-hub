@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  selenium-hub:
+    image: selenium/hub:3.141.59-selenium
+    ports:
+      - "${SELENIUM_PORT:-4444}:4444"
+    healthcheck:
+      test: ["CMD", "/opt/bin/check-grid.sh", "--host", "0.0.0.0", '--port', '4444']
+      interval: 15s
+      timeout: 30s
+      retries: 5
+      start_period: 40s
+    environment:
+      - JAVA_OPTS=-Xmx512m
+      - GRID_BROWSER_TIMEOUT=30
+  chrome:
+    image: selenium/node-chrome-debug:3.141.59-selenium
+    restart: unless-stopped
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - SCREEN_WIDTH=1200
+      - SCREEN_HEIGHT=768
+      - SCREEN_DEPTH=24
+      - SCREEN_DPI=74
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+      - START_XVFB=true
+  firefox:
+    image: selenium/node-firefox-debug:3.141.59-selenium
+    restart: unless-stopped
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - SCREEN_WIDTH=1200
+      - SCREEN_HEIGHT=768
+      - SCREEN_DEPTH=24
+      - SCREEN_DPI=74
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+      - START_XVFB=true
