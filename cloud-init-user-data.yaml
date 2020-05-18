@@ -1,7 +1,7 @@
 #cloud-config
-package_update: true
-package_upgrade: true
-package_reboot_if_required: true
+package_update: false
+package_upgrade: false
+package_reboot_if_required: false
 
 manage-resolv-conf: true
 resolv_conf:
@@ -16,11 +16,16 @@ users:
   - name: ubuntu
     shell: /bin/bash
     ssh-authorized-keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCaGUndi1axpToI/JG+FJ8S24cvi5yWMH+oCSgT+U+Ia13Dch3KcX+gpa1JjjsN89PbJZD+kWHOGTuORc1GeKHlIHtLplX20is1qCwIp1dG2ddqHqUOAwbcMVwrzkG2rwCW5CR7pKRMDyXXGxQXk1mBoLhkhXyAMFwj8im/WzYM74fWt5jd11lvKF5aYz5GYGvnYIBLjC2K+JHDXldH8FUqdVRQvAlU2Fy79W1lWJXeWy5WuI6ew2uvvFbV55dxaZs12yCcN8F82L9e2SoMPVeHWpwZOcT/MPsbOQ7uHAzxIr0jpyjnvmOyPeaavcPfbGrdfW/pBZx3Su5WObawstQD rcalleja@MacBook-Pro-de-Rafael.local
+      - ${SSH_PUBLIC_KEY}
     groups:
       - sudo
       - docker
     sudo:
       - ALL=(ALL) NOPASSWD:ALL
+
+runcmd:
+  - mkdir -p ${PWD}
+  - mount -t 9p -o trans=virtio,version=9p2000.L,rw host0 ${PWD}
+  ${RUN_CMD}
 
 final_message: "The system is finally up, after $UPTIME seconds"

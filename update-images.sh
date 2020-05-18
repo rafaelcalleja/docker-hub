@@ -1,6 +1,6 @@
 #!/bin/bash
 set -a
-LIBGUESTFS_BACKEND=
+LIBGUESTFS_BACKEND=direct
 sudo virt-customize -a ubuntu-18.04-server-cloudimg-amd64.img --root-password password:ubuntu
 
 sudo virt-customize -a ubuntu-18.04-server-cloudimg-amd64.img --install apt-transport-https,ca-certificates,curl,gnupg-agent,software-properties-common
