@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  docker-host:
+    labels:
+      com.example.usage: "DOCKER_HOST=tcp://localhost:2378 docker info"
+      com.example.ssh_import: "export SSH_PUBLIC_KEY=$$(cat ~/.ssh/id_rsa.pub)"
+    privileged: true
+    cap_add:
+      - ALL
+    image: rafaelcalleja/docker-in-qemu
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    tty: true
+    stdin_open: true
+    working_dir: ${PWD}
+    volumes:
+      - /dev/shm:/dev/shm
+      - .:${PWD}
+      - ${HOME}/docker-dokify:${HOME}/docker-dokify
+      - ${HOME}/github/dokify:${HOME}/github/dokify
+    devices:
+      - /dev/kvm:/dev/kvm
+    ports:
+      - 2378:2378
+      - 5555:5555
+    command:
+      - "-virtfs local,path=${HOME}/docker-dokify,mount_tag=host1,security_model=passthrough,id=host1 \
+         -virtfs local,path=${HOME}/github/dokify,mount_tag=host2,security_model=passthrough,id=host2"
+    environment:
+      - SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY:?Required SSH_PUBLIC_KEY}
+      - RUN_CMD=- mkdir -p ${HOME}/docker-dokify && mount -t 9p -o trans=virtio,version=9p2000.L,rw host1 ${HOME}/docker-dokify && mkdir -p ${HOME}/github/dokify && mount -t 9p -o trans=virtio,version=9p2000.L,rw host2 ${HOME}/github/dokify
