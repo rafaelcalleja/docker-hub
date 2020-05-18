@@ -17,3 +17,5 @@ sudo virt-customize -a ubuntu-18.04-server-cloudimg-amd64.img --run-command "ech
 ExecStart=
 ExecStart=/usr/bin/dockerd' > /etc/systemd/system/docker.service.d/simple_dockerd.conf"
 
+sudo virt-customize -a ubuntu-18.04-server-cloudimg-amd64.img --run-command "apt autoremove -y --purge && apt clean -y && rm -rf /var/lib/apt/lists/*"
+
