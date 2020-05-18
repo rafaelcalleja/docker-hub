@@ -1,0 +1,44 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+manage-resolv-conf: true
+resolv_conf:
+  nameservers:
+    - '8.8.8.8'
+    - '8.8.4.4'
+
+password: ubuntu
+chpasswd: { expire: False }
+ssh_pwauth: True
+
+users:
+  - name: ubuntu
+    lock_passwd: false
+    shell: /bin/bash
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCaGUndi1axpToI/JG+FJ8S24cvi5yWMH+oCSgT+U+Ia13Dch3KcX+gpa1JjjsN89PbJZD+kWHOGTuORc1GeKHlIHtLplX20is1qCwIp1dG2ddqHqUOAwbcMVwrzkG2rwCW5CR7pKRMDyXXGxQXk1mBoLhkhXyAMFwj8im/WzYM74fWt5jd11lvKF5aYz5GYGvnYIBLjC2K+JHDXldH8FUqdVRQvAlU2Fy79W1lWJXeWy5WuI6ew2uvvFbV55dxaZs12yCcN8F82L9e2SoMPVeHWpwZOcT/MPsbOQ7uHAzxIr0jpyjnvmOyPeaavcPfbGrdfW/pBZx3Su5WObawstQD rcalleja@MacBook-Pro-de-Rafael.local
+    groups:
+      - sudo
+      - ubuntu
+      - docker
+    sudo:
+      - ALL=(ALL) NOPASSWD:ALL
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg-agent
+  - software-properties-common
+
+runcmd:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - apt-get update -y
+  - apt-get install docker-ce docker-ce-cli containerd.io
+  - systemctl start docker
+  - systemctl enable docker
+
+final_message: "The system is finally up, after $UPTIME seconds"
