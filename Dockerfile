@@ -12,10 +12,9 @@ RUN apt-get update && \
 
 WORKDIR /root
 
-COPY start-qemu.sh /usr/local/bin/
-COPY cloud-init-user-data.yaml /root/
+COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/usr/local/bin/start-qemu.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 #docker run --privileged --cap-add=ALL --device /dev/kvm --mount type=tmpfs,destination=/var/tmp -p 5555:5555 -p 2378:2378 -v /dev/shm:/dev/shm -it --rm -d rafa/qemu
 
