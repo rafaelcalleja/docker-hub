@@ -18,7 +18,8 @@ mkdir /etc/docker && \
 mkdir -p /etc/systemd/system/docker.service.d && \
 echo '[Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd' > /etc/systemd/system/docker.service.d/simple_dockerd.conf
+ExecStart=/usr/bin/dockerd' > /etc/systemd/system/docker.service.d/simple_dockerd.conf && \
+sed -i 's/scripts\-user/[scripts\-user, always]/g' /etc/cloud/cloud.cfg
 EOF
 
 virt-customize -a ubuntu-18.04-server-cloudimg-amd64.img --run-command "${RUN_COMMAND}"
