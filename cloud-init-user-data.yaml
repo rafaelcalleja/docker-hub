@@ -9,23 +9,10 @@ resolv_conf:
     - '8.8.8.8'
     - '8.8.4.4'
 
-password: ubuntu
-chpasswd: { expire: False }
-ssh_pwauth: True
 users:
-  - name: ubuntu
+  - name: root
     shell: /bin/bash
     ssh-authorized-keys:
       - ${SSH_PUBLIC_KEY}
-    groups:
-      - sudo
-      - docker
-    sudo:
-      - ALL=(ALL) NOPASSWD:ALL
-
-runcmd:
-  - mkdir -p ${PWD}
-  - mount -t 9p -o trans=virtio,version=9p2000.L,rw host0 ${PWD}
-  ${RUN_CMD}
 
 final_message: "The system is finally up, after $UPTIME seconds"

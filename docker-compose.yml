@@ -21,11 +21,14 @@ services:
     volumes:
       - /dev/shm:/dev/shm
       - ${VM_IMAGE:?VM image must be supplied}:/image
+      - ${CLOUD_INIT:?Required CLOUD_INIT}:/cloud-init.yaml
     devices:
       - /dev/kvm:/dev/kvm
     ports:
-      - 2378:2378
-      - 5555:5555
+      - 2378:${EXPOSE_DOCKER:-2378}
+      - 5555:${EXPOSE_SSH:-5555}
     environment:
       - SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY:?Required SSH_PUBLIC_KEY}
       - CLOUD_INIT=${CLOUD_INIT:?Required CLOUD_INIT}
+      - EXPOSE_SSH=${EXPOSE_SSH:-5555}
+      - EXPOSE_DOCKER=${EXPOSE_DOCKER:-2378}
